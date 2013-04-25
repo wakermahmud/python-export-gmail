@@ -7,9 +7,9 @@ Export emails from the GMAIL service using python and IMAP. Optionally save gmai
 Usage export-gmail.py username password folder [save]
 
 where:
-  username: gmail username as used to log in to the gmail account
-  password: password associated with the username
-  folder:   the name of the folder you want to export, INBOX 'Holiday Snaps' or whatever
+  username: gmail username as used to log in to the gmail account<br>
+  password: password associated with the username<br>
+  folder:   the name of the folder you want to export, INBOX 'Holiday Snaps' or whatever<br>
 
   save:     suppliy this word if you want to save the downloaded email into aa local Db.
             This is useful if you want to keep running this periodically and only get new messages.
