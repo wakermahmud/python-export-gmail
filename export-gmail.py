@@ -8,6 +8,7 @@ import hashlib
 
 try:
     import MySQLdb
+    print "MYSQL Support found"
 except:
     print "No MYSQL Support found"
     
