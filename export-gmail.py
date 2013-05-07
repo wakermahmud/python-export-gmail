@@ -6,7 +6,11 @@ import email
 import sqlite3
 import hashlib
 
-save_in_db = False
+try:
+    import MySQLdb
+except:
+    print "No MYSQL Support found"
+    
 
 def usage():
     print "\nUsage %s username password folder [save]\n" % sys.argv[0]
@@ -31,28 +35,33 @@ if not len(u) or not len(f) or not len(p):
     usage()
 
 
+save_in_db = False
 try:
     save_in_db = sys.argv[4].lower() == 'save'
 except:
     pass
     
-" this is the name of the sqlite database that you want to save the emails into "
+" this is the name of the database that you want to save the emails into "
 
 db_name = 'gmail.db'
 
 
 """
 Return a list of all the email uids that have been previously saved in the 
-local sqlite db
+local db
 
 We use this list to decide if we have already got/downloaded these messages before
 
 """
 
+def get_db(db_name):
+    conn = sqlite3.connect(db_name)
+    return conn
+
 def get_ids_from_db(f):
     l = []
     try:
-        conn = sqlite3.connect(db_name)
+        conn = get_db(db_name)
         
         c = conn.cursor()
         
@@ -69,12 +78,12 @@ def get_ids_from_db(f):
     return l
 
 def create_global_table(f):
-    conn = sqlite3.connect(db_name)
+    conn = get_db(db_name)
     
     c = conn.cursor()
 
     """
-    Create a table in the sqlite database with the same name as the gmail folder     
+    Create a table in the database with the same name as the gmail folder     
     Where:
         id         - unique id generated over the column data
         subject    - email subject
@@ -95,7 +104,7 @@ def create_global_table(f):
 
 
 def save(f, id, email_message, subject, date, body):
-    conn = sqlite3.connect(db_name)
+    conn = get_db(db_name)
     
     c = conn.cursor()
     t = "%s" % f
