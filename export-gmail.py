@@ -56,7 +56,11 @@ We use this list to decide if we have already got/downloaded these messages befo
 """
 
 def get_db(db_name):
-    conn = sqlite3.connect(db_name)
+    #conn = sqlite3.connect(db_name)
+    conn = MySQLdb.connect(host="davetest.cpsco10kzuix.ap-southeast-2.rds.amazonaws.com", # your host, usually localhost
+                     user="davetest", # your username
+                      passwd="davetest123") # name of the data base
+
     return conn
 
 def get_ids_from_db(f):
