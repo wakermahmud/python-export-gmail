@@ -9,7 +9,7 @@ import dateutil.parser as parser
 
 
 try:
-    import MySQLdb as DBA
+    import XXMySQLdb as DBA
     print "MYSQL Support found"
 except:
     print "No MYSQL Support found"
