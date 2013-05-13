@@ -123,7 +123,7 @@ def save(f, id, email_message, subject, date, body):
     " when inserting we will use positional placement "        
     tuple = (id, subject, date, body, str(email_message))
     try:
-        c.execute("INSERT INTO '%s' (id, subject, dt, body, email) VALUES (?,?,?,?,?)" % t, tuple)
+        c.execute("INSERT INTO %s (id, subject, dt, body, email) VALUES (?,?,?,?,?)" % t, tuple)
     except DBA.IntegrityError, e:
         " A fail due to unique constraint firing - ignore - this is OK "
         pass
