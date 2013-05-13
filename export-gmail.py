@@ -75,12 +75,14 @@ def get_ids_from_db(f):
         
         t = "%s" % f
         
-        q = "SELECT id FROM '%s'" % (t,)
+        q = "SELECT id FROM %s" % (t,)
     
         c.execute(q)
+        
         l = [x[0] for x in c.fetchall()]
+        
         conn.close()
-    except sqlite3.OperationalError, e:
+    except DBA.OperationalError, e:
         print e
    
     return l
