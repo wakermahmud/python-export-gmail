@@ -66,7 +66,8 @@ def ct(text):
 
 def get_db(db_name):
     
-    h = "davetest.cpsco10kzuix.ap-southeast-2.rds.amazonaws.com"
+    " for MYSQL assumes a database called myname exists - change the rest of the params as needed "
+    h = "xxx.rds.amazonaws.com"
     u = 'davetest'
     p = 'davetest123'
     conn = DBA.connect(db_name)  if  'sqlite3' == DBA.__name__ else DBA.connect(host=h, user=u, passwd=p, db="myname") # name of the data base
