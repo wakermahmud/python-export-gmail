@@ -106,7 +106,7 @@ def create_global_table(f):
     constraint = ' UNIQUE ' if  'sqlite3' == DBA.__name__ else ' PRIMARY KEY '
     
 #    q = "CREATE TABLE %s (id INTEGER UNIQUE, subject text, dt datetime, body text, email text)" % (t, constraint,)
-    q = "CREATE TABLE %s (id INTEGER, subject text, dt datetime, body text, email text)" % (t, constraint,)
+    q = "CREATE TABLE %s (id INTEGER %s, subject text, dt datetime, body text, email text)" % (t, constraint,)
     try:
         c.execute(q)
     except sqlite3.OperationalError, e:
