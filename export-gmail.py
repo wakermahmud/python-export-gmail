@@ -62,11 +62,11 @@ def ct(text):
 
 
 def get_db(db_name):
-    #conn = DBA.connect(db_name)
-    conn = DBA.connect(host="davetest.cpsco10kzuix.ap-southeast-2.rds.amazonaws.com", # your host, usually localhost
-                     user="davetest", # your username
-                      passwd="davetest123", # your password
-                      db="davetest") # name of the data base
+    
+    h = "davetest.cpsco10kzuix.ap-southeast-2.rds.amazonaws.com"
+    u = 'davetest'
+    p = 'davetest123'
+    conn = DBA.connect(db_name)  if  'sqlite3' == DBA.__name__ else DBA.connect(host=h, user=u, passwd=p, db="myname") # name of the data base
 
     return conn
 
