@@ -5,6 +5,8 @@ import imaplib
 import email
 import sqlite3 as DBA
 import hashlib
+import dateutil.parser as parser
+
 
 try:
     import MySQLdb as DBA
@@ -53,6 +55,11 @@ local db
 We use this list to decide if we have already got/downloaded these messages before
 
 """
+
+def ct(text):
+    date = (parser.parse(text))
+    return date.isoformat()
+
 
 def get_db(db_name):
     #conn = DBA.connect(db_name)
@@ -121,7 +128,7 @@ def save(f, id, email_message, subject, date, body):
     c = conn.cursor()
     t = "%s" % f
     " when inserting we will use positional placement "        
-    tuple = (id, subject, date, body, str(email_message))
+    tuple = (id, subject, ct(date), body, str(email_message))
 
     placeholder = '?' if  'sqlite3' == DBA.__name__ else '%s'
 
