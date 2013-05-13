@@ -3,15 +3,17 @@
 import sys, datetime, re
 import imaplib
 import email
-import sqlite3
+import sqlite3 as DBA
 import hashlib
 
 try:
-    import MySQLdb
+    import MySQLdb as DBA
     print "MYSQL Support found"
 except:
     print "No MYSQL Support found"
     
+    
+print "XXXXX", DBA.__name__
 
 def usage():
     print "\nUsage %s username password folder [save]\n" % sys.argv[0]
@@ -56,8 +58,8 @@ We use this list to decide if we have already got/downloaded these messages befo
 """
 
 def get_db(db_name):
-    #conn = sqlite3.connect(db_name)
-    conn = MySQLdb.connect(host="davetest.cpsco10kzuix.ap-southeast-2.rds.amazonaws.com", # your host, usually localhost
+    #conn = DBA.connect(db_name)
+    conn = DBA.connect(host="davetest.cpsco10kzuix.ap-southeast-2.rds.amazonaws.com", # your host, usually localhost
                      user="davetest", # your username
                       passwd="davetest123", # your password
                       db="davetest") # name of the data base
@@ -98,8 +100,13 @@ def create_global_table(f):
         email      - this is the raw email information received from gmail - unparsed.
     """
     
+    
     t = "%s" % f
-    q = "CREATE TABLE '%s' (id INTEGER UNIQUE, subject text, dt datetime, body text, email text)" % t
+    
+    constraint = ' UNIQUE ' if  'sqlite3' == DBS.__name__ else ' PRIMARY KEY '
+    
+#    q = "CREATE TABLE %s (id INTEGER UNIQUE, subject text, dt datetime, body text, email text)" % (t, constraint,)
+    q = "CREATE TABLE %s (id INTEGER, subject text, dt datetime, body text, email text)" % (t, constraint,)
     try:
         c.execute(q)
     except sqlite3.OperationalError, e:
