@@ -109,7 +109,7 @@ def create_global_table(f):
     q = "CREATE TABLE %s (id INTEGER %s, subject text, dt datetime, body text, email text)" % (t, constraint,)
     try:
         c.execute(q)
-    except sqlite3.OperationalError, e:
+    except DBA.OperationalError, e:
         " ignore the error if the table exists already "
         pass
     conn.close()
