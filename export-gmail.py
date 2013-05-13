@@ -132,7 +132,7 @@ def save(f, id, email_message, subject, date, body):
 
     placeholder = '?' if  'sqlite3' == DBA.__name__ else '%s'
 
-    print "BODY", body
+    print "XXX-->", body, "<--XXX"
 
     try:
         qs = "INSERT INTO %s (id, subject, dt, body, email) VALUES (%s,%s,%s,%s,%s)" % (t, placeholder, placeholder, placeholder, placeholder, placeholder)
