@@ -12,9 +12,6 @@ try:
 except:
     print "No MYSQL Support found"
     
-    
-print "XXXXX", DBA.__name__
-
 def usage():
     print "\nUsage %s username password folder [save]\n" % sys.argv[0]
     sys.exit(0)
