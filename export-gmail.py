@@ -8,7 +8,7 @@ import sqlite3 as DBA
 import dateutil.parser as parser
 
 " change to False to put your data into a mysql db "
-use_sqlite = True
+use_sqlite = False
 
 try:
     if not use_sqlite:
