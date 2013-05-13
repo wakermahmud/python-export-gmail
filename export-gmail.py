@@ -122,8 +122,11 @@ def save(f, id, email_message, subject, date, body):
     t = "%s" % f
     " when inserting we will use positional placement "        
     tuple = (id, subject, date, body, str(email_message))
+
+    placeholder = '?' if  'sqlite3' == DBA.__name__ else '%s'
+
     try:
-        qs = "INSERT INTO %s (id, subject, dt, body, email) VALUES (?,?,?,?,?)" % t
+        qs = "INSERT INTO %s (id, subject, dt, body, email) VALUES (%s,%s,%s,%s,%s)" % (t, placeholder, placeholder, placeholder, placeholder, placeholder)
         c.execute(qs, tuple)
     except DBA.IntegrityError, e:
         " A fail due to unique constraint firing - ignore - this is OK "
