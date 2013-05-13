@@ -3,14 +3,17 @@
 import sys, datetime, re
 import imaplib
 import email
-import sqlite3 as DBA
 import hashlib
+import sqlite3 as DBA
 import dateutil.parser as parser
 
+" change to False to put your data into a mysql db "
+use_sqlite = True
 
 try:
-    import XXMySQLdb as DBA
-    print "MYSQL Support found"
+    if not use_sqlite:
+        import MySQLdb as DBA
+        print "MYSQL Support found"
 except:
     print "No MYSQL Support found"
     
@@ -111,7 +114,6 @@ def create_global_table(f):
     
     constraint = ' UNIQUE ' if  'sqlite3' == DBA.__name__ else ' PRIMARY KEY '
     
-#    q = "CREATE TABLE %s (id INTEGER UNIQUE, subject text, dt datetime, body text, email text)" % (t, constraint,)
     q = "CREATE TABLE %s (id INTEGER %s, subject text, dt datetime, body text, email text)" % (t, constraint,)
     try:
         c.execute(q)
