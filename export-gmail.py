@@ -127,7 +127,7 @@ def save(f, id, email_message, subject, date, body):
     tuple = (id, subject, date, body, str(email_message))
     try:
         c.execute("INSERT INTO '%s' (id, subject, dt, body, email) VALUES (?,?,?,?,?)" % t, tuple)
-    except sqlite3.IntegrityError, e:
+    except DBA.IntegrityError, e:
         " A fail due to unique constraint firing - ignore - this is OK "
         pass
     
