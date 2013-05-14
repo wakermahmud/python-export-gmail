@@ -15,3 +15,8 @@ where:<br>
 
 This is pretty much just a proof of concept and demonstrates how to export and save into sqlite or MySQL
 
+
+
+Note: you make need to<br>
+pip install dateutils<br>
+yum install MySQL-python<br>
