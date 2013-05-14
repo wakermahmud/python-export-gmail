@@ -8,7 +8,7 @@ import sqlite3 as DBA
 import dateutil.parser as parser
 
 " change to False to put your data into a mysql db "
-use_sqlite = False
+use_sqlite = True
 
 try:
     if not use_sqlite:
@@ -174,6 +174,7 @@ def get_gmail_uids(mail):
     """
     
     result, data = mail.uid('search', None, "ALL") 
+#    result, data = mail.uid('search', None, '(HEADER Subject "Something that is in my Subject line")')
     
     target_uids = data[0].split()
     len_uids = len(target_uids)
