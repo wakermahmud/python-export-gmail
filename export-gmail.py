@@ -216,6 +216,7 @@ if __name__ == "__main__":
 
     use_sqlite = (h == None)
     
+    print "Saving into %s" % use_sqlite
     try:
         if not use_sqlite:
             import MySQLdb as DBA
