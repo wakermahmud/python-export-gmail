@@ -216,7 +216,10 @@ if __name__ == "__main__":
 
     use_sqlite = (h == None)
     
-    print "Saving into %s" % use_sqlite
+    if(h and (mu is None or mp is None)):
+        parser.print_help()
+        sys.exit(0)
+
     try:
         if not use_sqlite:
             import MySQLdb as DBA
