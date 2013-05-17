@@ -214,7 +214,7 @@ if __name__ == "__main__":
     db = options.DATABASE
     save_in_db = options.SAVE
 
-    use_sqlite = len(h) == 0
+    use_sqlite = (mu == None)
     
     try:
         if not use_sqlite:
