@@ -5,46 +5,15 @@ import imaplib
 import email
 import hashlib
 import sqlite3 as DBA
-import dateutil.parser as parser
+import dateutil.parser as dparser
+from optparse import OptionParser
 
-" change to False to put your data into a mysql db "
-use_sqlite = True
-
-try:
-    if not use_sqlite:
-        import MySQLdb as DBA
-        print "MYSQL Support found"
-except:
-    print "No MYSQL Support found"
     
 def usage():
     print "\nUsage %s username password folder [save]\n" % sys.argv[0]
     sys.exit(0)
 
 
-try:
-    u = sys.argv[1]
-    p = sys.argv[2]
-    
-    """
-    Folder to look for - this is case sensitive - this could be something like INBOX or 'Holiday Snaps'
-    """
-    
-    f = sys.argv[3]
-except:
-    usage()
-
-    
-    
-if not len(u) or not len(f) or not len(p):
-    usage()
-
-
-save_in_db = False
-try:
-    save_in_db = sys.argv[4].lower() == 'save'
-except:
-    pass
     
 " this is the name of the database that you want to save the emails into "
 
@@ -60,17 +29,14 @@ We use this list to decide if we have already got/downloaded these messages befo
 """
 
 def ct(text):
-    date = (parser.parse(text))
+    date = (dparser.parse(text))
     return date.isoformat()
 
 
 def get_db(db_name):
     
     " for MYSQL assumes a database called myname exists - change the rest of the params as needed "
-    h = "xxx.rds.amazonaws.com"
-    u = 'davetest'
-    p = 'davetest123'
-    conn = DBA.connect(db_name)  if  'sqlite3' == DBA.__name__ else DBA.connect(host=h, user=u, passwd=p, db="myname") # name of the data base
+    conn = DBA.connect(db_name)  if  'sqlite3' == DBA.__name__ else DBA.connect(host=h, user=mu, passwd=mp, db=db) # name of the data base
 
     return conn
 
@@ -225,4 +191,40 @@ def main():
             save(f, email_uid, email_message, subject, date, body)
    
 if __name__ == "__main__":
-    main()
+
+    parser = OptionParser()
+
+    parser.add_option("--mysql-host", action="store", dest="HOST", help="MySQL host")
+    parser.add_option("-u", "--gmail-username", action="store", dest="USER", help="Gmail username")
+    parser.add_option("-p", "--gmail-password", action="store", dest="PASSWORD", help="Gmail password")
+    parser.add_option("-f", "--gmail-folder", action="store", dest="FOLDER", help="Gmail folder")
+    parser.add_option("--save", action="store_true", dest="SAVE", default=True, help="Gmail folder")
+    parser.add_option("--mysql-username", action="store", dest="MYSQLUSER", help="MySQL username")
+    parser.add_option("--mysql-password", action="store", dest="MYSQLPASSWORD", help="MySQL password")
+    parser.add_option("--database", action="store", default="myname", dest="DATABASE", help="MySQL database")
+
+    (options, args) = parser.parse_args()
+    
+    h = options.HOST
+    u = options.USER
+    f = options.FOLDER
+    p = options.PASSWORD
+    mu = options.MYSQLUSER
+    mp = options.MYSQLPASSWORD
+    db = options.DATABASE
+    save_in_db = options.SAVE
+
+    use_sqlite = len(h) == 0
+    
+    try:
+        if not use_sqlite:
+            import MySQLdb as DBA
+            print "MYSQL Support found"
+    except:
+        print "No MYSQL Support found"
+
+
+    try:
+        main()
+    except:
+        parser.print_help()
