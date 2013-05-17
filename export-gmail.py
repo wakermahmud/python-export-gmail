@@ -9,12 +9,6 @@ import dateutil.parser as dparser
 from optparse import OptionParser
 
     
-def usage():
-    print "\nUsage %s username password folder [save]\n" % sys.argv[0]
-    sys.exit(0)
-
-
-    
 " this is the name of the database that you want to save the emails into "
 
 db_name = 'gmail.db'
@@ -232,4 +226,3 @@ if __name__ == "__main__":
         main()
     except Exception, e:
         print e
-        #parser.print_help()
