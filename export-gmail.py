@@ -10,17 +10,8 @@ from optparse import OptionParser
 
     
 " this is the name of the database that you want to save the emails into "
-
 db_name = 'gmail.db'
 
-
-"""
-Return a list of all the email uids that have been previously saved in the 
-local db
-
-We use this list to decide if we have already got/downloaded these messages before
-
-"""
 
 def ct(text):
     date = (dparser.parse(text))
@@ -110,7 +101,7 @@ def parse_body(raw):
     lines = raw.as_string().splitlines()
     for i, l in enumerate(lines):
         " For me the part of the body I am interested in follows 'Content-Transfer-Encoding' "
-        if 'Content-Transfer-Encoding' in l:
+        if 'Content-Transfer-Encoding' in l or 'Content-Type: text/plain' in l:
             i += 1
             break
     s = raw.as_string()
