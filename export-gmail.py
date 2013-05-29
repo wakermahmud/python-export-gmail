@@ -107,6 +107,7 @@ def parse_body(raw):
         
         for ignore in mime_ignore:
             if ignore in l:
+                print "IGNORING"
                 return None
             
         if 'Content-Transfer-Encoding' in l or 'Content-Type: text/plain' in l:
