@@ -12,7 +12,7 @@ from optparse import OptionParser
 " this is the name of the database that you want to save the emails into "
 db_name = 'gmail.db'
 
-mime_ignore ['Content-Type: image']
+mime_ignore = ['Content-Type: image']
 
 def ct(text):
     date = (dparser.parse(text))
