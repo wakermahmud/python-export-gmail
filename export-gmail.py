@@ -102,13 +102,14 @@ def save(f, id, email_message, subject, date, body):
 
 def parse_body(raw):
     lines = raw.as_string().splitlines()
+    for ignore in mime_ignore:
+        rec = re.compile(ignore)
+        if not rec.search(line):
+            print "IGNORING"
+            return None
     for i, l in enumerate(lines):
         " For me the part of the body I am interested in follows 'Content-Transfer-Encoding' "
         
-        for ignore in mime_ignore:
-            if ignore in l:
-                print "IGNORING"
-                return None
             
         if 'Content-Transfer-Encoding' in l or 'Content-Type: text/plain' in l:
             i += 1
