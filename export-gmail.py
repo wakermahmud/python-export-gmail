@@ -12,6 +12,7 @@ from optparse import OptionParser
 " this is the name of the database that you want to save the emails into "
 db_name = 'gmail.db'
 
+mime_ignore ['Content-Type: image']
 
 def ct(text):
     date = (dparser.parse(text))
@@ -103,6 +104,11 @@ def parse_body(raw):
     lines = raw.as_string().splitlines()
     for i, l in enumerate(lines):
         " For me the part of the body I am interested in follows 'Content-Transfer-Encoding' "
+        
+        for ignore in mime_ignore:
+            if ignore in l:
+                return None
+            
         if 'Content-Transfer-Encoding' in l or 'Content-Type: text/plain' in l:
             i += 1
             break
@@ -166,6 +172,9 @@ def main():
         email_message = email.message_from_string(raw_email)
         
         body = parse_body(email_message)
+        if body is None:
+            continue
+        
         date = email_message['date']
         subject = email_message['subject']
     
