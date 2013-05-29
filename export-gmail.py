@@ -82,12 +82,14 @@ def save(f, id, email_message, subject, date, body):
     c = conn.cursor()
     t = "%s" % f
     " when inserting we will use positional placement "        
-    tuple = (id, subject, ct(date), body, str(email_message))
+#    tuple = (id, subject, ct(date), body, str(email_message))
+    tuple = (id, subject, ct(date), body)
 
     placeholder = '?' if  'sqlite3' == DBA.__name__ else '%s'
 
     try:
-        qs = "INSERT INTO %s (id, subject, dt, body, email) VALUES (%s,%s,%s,%s,%s)" % (t, placeholder, placeholder, placeholder, placeholder, placeholder)
+#        qs = "INSERT INTO %s (id, subject, dt, body, email) VALUES (%s,%s,%s,%s,%s)" % (t, placeholder, placeholder, placeholder, placeholder, placeholder)
+        qs = "INSERT INTO %s (id, subject, dt, body) VALUES (%s,%s,%s,%s)" % (t, placeholder, placeholder, placeholder, placeholder)
         c.execute(qs, tuple)
     except DBA.IntegrityError, e:
         " A fail due to unique constraint firing - ignore - this is OK "
