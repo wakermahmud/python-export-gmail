@@ -126,7 +126,7 @@ def get_gmail_uids(mail):
     search and return all email uids
     """
     
-    result, data = mail.uid('search', None, "ALL") 
+    result, data = mail.uid('search', None, pattern) 
 #    result, data = mail.uid('search', None, '(HEADER Subject "Something that is in my Subject line")')
     
     target_uids = data[0].split()
@@ -186,6 +186,7 @@ if __name__ == "__main__":
     parser.add_option("-p", "--gmail-password", action="store", dest="PASSWORD", help="Gmail password")
     parser.add_option("-f", "--gmail-folder", action="store", dest="FOLDER", help="Gmail folder")
     parser.add_option("--save", action="store_true", dest="SAVE", default=True, help="Gmail folder")
+    parser.add_option("--pattern", action="store", dest="PATTERN", default="ALL", help="Search pattern for gmail IMAP")
     parser.add_option("--mysql-username", action="store", dest="MYSQLUSER", help="MySQL username")
     parser.add_option("--mysql-password", action="store", dest="MYSQLPASSWORD", help="MySQL password")
     parser.add_option("--database", action="store", default="myname", dest="DATABASE", help="MySQL database")
@@ -200,6 +201,7 @@ if __name__ == "__main__":
     mp = options.MYSQLPASSWORD
     db = options.DATABASE
     save_in_db = options.SAVE
+    pattern = options.PATTERN
 
     use_sqlite = (h == None)
     
