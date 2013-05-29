@@ -105,7 +105,9 @@ def parse_body(raw):
     for line in lines:
         for ignore in mime_ignore:
             rec = re.compile(ignore)
-            if not rec.search(line):
+            m = rec.search(line)
+            print m
+            if m:
                 print "IGNORING"
                 return None
 
